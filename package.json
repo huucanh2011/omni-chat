@@ -1,0 +1,24 @@
+{
+  "name": "multi-chat-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "concurrently -n desktop,gateway -c cyan,green \"pnpm -C apps/desktop dev\" \"pnpm -C services/gateway dev\"",
+    "dev:electron": "concurrently -n gateway,electron -c green,cyan \"pnpm -C services/gateway dev\" \"pnpm -C apps/desktop electron:dev\"",
+    "build": "pnpm -C services/gateway build && pnpm -C apps/desktop build",
+    "typecheck": "pnpm -C services/gateway typecheck && pnpm -C apps/desktop typecheck",
+    "dist:mac": "pnpm -C apps/desktop build && pnpm -C apps/desktop pack:mac",
+    "dist:win": "pnpm -C apps/desktop build && pnpm -C apps/desktop pack:win"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "electron",
+      "esbuild"
+    ]
+  }
+}

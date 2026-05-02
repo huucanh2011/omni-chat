@@ -1,0 +1,10 @@
+node_modules
+**/node_modules
+**/dist
+.data
+services/gateway/.data
+services/gateway/dist
+apps/desktop/dist
+apps/desktop/release
+.DS_Store
+**/.DS_Store

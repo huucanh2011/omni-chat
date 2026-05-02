@@ -1,0 +1,61 @@
+export const vi = {
+  platform: {
+    telegram: "Telegram",
+    zalo: "Zalo",
+    teams: "Teams"
+  },
+  app: {
+    ready: "Sẵn sàng",
+    noAccountSelected: "Chưa chọn tài khoản",
+    serviceView: "Khung dịch vụ",
+    invalidServiceUrl: "URL dịch vụ không hợp lệ.",
+    pickOrAddAccount: "Chọn tài khoản hoặc thêm tài khoản mới.",
+    requiredDisplayNameAndUrl: "Cần nhập tên hiển thị và URL dịch vụ"
+  },
+  status: {
+    switchFailed: (name: string) => `Chuyển thất bại: ${name}`,
+    accountAdded: (name: string) => `Đã thêm tài khoản: ${name}`,
+    createFailed: "Thêm tài khoản thất bại",
+    accountUpdated: (name: string) => `Đã cập nhật: ${name}`,
+    updateFailed: "Cập nhật thất bại",
+    accountDeleted: "Đã xoá tài khoản",
+    deleteFailed: "Xoá tài khoản thất bại",
+    reloaded: (name: string) => `Đã tải lại: ${name}`,
+    sessionCleared: "Đã xoá session",
+    recoverTriggered: "Đã chạy khôi phục"
+  },
+  header: {
+    launchOnStartup: "Mở cùng hệ thống",
+    connected: "Đã kết nối",
+    offline: "Ngoại tuyến",
+    reloadTitle: "Tải lại webview",
+    recoverTitle: "Khôi phục kết nối"
+  },
+  settings: {
+    title: "Cài đặt ứng dụng",
+    launchOnStartup: "Mở cùng hệ thống",
+    globalHint: "Thiết lập này áp dụng cho toàn bộ ứng dụng, không theo từng tài khoản."
+  },
+  drawer: {
+    addAccountTitle: "Thêm tài khoản",
+    editAccountTitle: "Sửa tài khoản",
+    platform: "Nền tảng",
+    displayName: "Tên hiển thị",
+    serviceUrl: "URL dịch vụ",
+    muteNotificationsPerAccount: "Tắt âm thanh tài khoản",
+    userAgentOptional: "User-Agent (tuỳ chọn)",
+    proxyUrlOptional: "Proxy URL (tuỳ chọn)",
+    resetDefaultUrl: "Đặt lại URL mặc định",
+    addAccount: "Thêm tài khoản",
+    saveChanges: "Lưu thay đổi",
+    deleteAccount: "Xoá tài khoản",
+    clearAccountSession: "Xoá session tài khoản",
+    status: "Trạng thái"
+  },
+  rail: {
+    addAccount: "Thêm tài khoản",
+    editAccount: "Sửa tài khoản",
+    accountTitle: (name: string, platform: string) => `${name} (${platform})`,
+    searchPlaceholder: "Tìm tài khoản..."
+  }
+} as const;

@@ -1,0 +1,395 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap");
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #0a0d14;
+  color: #e8ecf8;
+}
+
+.ram-shell { min-height: 100vh; }
+
+.ram-layout {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  height: 100dvh;
+  min-height: 100dvh;
+  min-width: 0;
+  background: #0c1018;
+  overflow: hidden;
+}
+
+.accounts-rail {
+  background: #171c28;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 4px;
+  min-width: 56px;
+  width: 56px;
+  overflow-y: auto;
+  overflow-x: visible;
+  position: relative;
+  z-index: 20;
+}
+
+.brand-icon { box-shadow: 0 8px 20px rgba(43, 98, 245, 0.4); }
+.brand-wrap .mantine-ThemeIcon-root {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.brand-wrap {
+  position: relative;
+}
+
+.brand-unread-dot {
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #ef4444;
+  border: 2px solid #0f1420;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+
+.rail-selected-name {
+  max-width: 64px;
+  opacity: 0.9;
+}
+
+.rail-active-label {
+  max-width: 48px;
+  border-radius: 999px;
+  padding: 2px 6px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #c8d8ff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.rail-active-telegram {
+  color: #d8edff;
+  border-color: rgba(88, 174, 255, 0.55);
+  background: rgba(46, 134, 222, 0.28);
+}
+
+.rail-active-zalo {
+  color: #d9ebff;
+  border-color: rgba(41, 137, 255, 0.55);
+  background: rgba(25, 118, 210, 0.28);
+}
+
+.rail-active-teams {
+  color: #ece6ff;
+  border-color: rgba(124, 116, 255, 0.6);
+  background: rgba(111, 94, 246, 0.28);
+}
+
+.rail-version {
+  color: #6f7fa8;
+  letter-spacing: 0.3px;
+  margin-top: -4px;
+}
+
+.rail-search-inline {
+  width: 44px;
+}
+
+.rail-search-inline input {
+  height: 24px;
+  min-height: 24px;
+  padding: 0 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: #dbe6ff;
+  font-size: 10px;
+  text-align: center;
+}
+
+.rail-search-inline input::placeholder {
+  color: #95a4cd;
+}
+
+.rail-search-inline input:focus {
+  border-color: rgba(95, 168, 255, 0.75);
+}
+
+.rail-switch {
+  transform: scale(0.9);
+}
+
+.rail-status {
+  width: 42px;
+  border-radius: 999px;
+  text-align: center;
+  color: #f6f9ff;
+  background: rgba(134, 146, 176, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2px 0;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.rail-tools {
+  padding: 6px 4px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rail-status.ok {
+  background: rgba(17, 153, 118, 0.35);
+  border-color: rgba(66, 224, 172, 0.45);
+}
+
+.rail-account {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
+  color: #eef3ff;
+  font-weight: 700;
+  font-size: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+  cursor: grab;
+}
+
+.rail-account:hover {
+  transform: translateY(-1px);
+}
+
+.rail-account:active {
+  cursor: grabbing;
+}
+
+.rail-account .acc-unread-dot {
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #ef4444;
+  border: 2px solid #1b2230;
+}
+
+.rail-account .rail-platform-chip {
+  position: absolute;
+  left: -5px;
+  bottom: -5px;
+  min-width: 13px;
+  height: 11px;
+  border-radius: 999px;
+  font-size: 6px;
+  line-height: 11px;
+  text-align: center;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.rail-account.active {
+  background: linear-gradient(180deg, #4b9dff 0%, #5a72f8 100%);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.15),
+    0 8px 18px rgba(64, 108, 255, 0.45);
+  transform: translateY(-1px) scale(1.03);
+}
+
+.rail-account.active::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 7px;
+  width: 3px;
+  height: 16px;
+  border-radius: 999px;
+  background: #8fc2ff;
+  box-shadow: 0 0 10px rgba(143, 194, 255, 0.9);
+}
+
+.rail-account.active::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 11px;
+  border: 1px solid rgba(171, 214, 255, 0.55);
+  pointer-events: none;
+  animation: activePulse 1.6s ease-out infinite;
+}
+
+@keyframes activePulse {
+  0% {
+    opacity: 0.95;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 0.25;
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 0.1;
+    transform: scale(1.09);
+  }
+}
+
+.rail-account.rail-telegram {
+  border-color: rgba(88, 174, 255, 0.9);
+  background: linear-gradient(180deg, #53b2ff 0%, #2f89f5 100%);
+  box-shadow: 0 6px 16px rgba(47, 137, 245, 0.35);
+}
+.rail-account.rail-telegram .rail-platform-chip { background: #2e86de; }
+
+.rail-account.rail-zalo {
+  border-color: rgba(41, 137, 255, 0.92);
+  background: linear-gradient(180deg, #3c9bff 0%, #1c6df0 100%);
+  box-shadow: 0 6px 16px rgba(28, 109, 240, 0.35);
+}
+.rail-account.rail-zalo .rail-platform-chip { background: #1976d2; }
+
+.rail-account.rail-teams {
+  border-color: rgba(124, 116, 255, 0.92);
+  background: linear-gradient(180deg, #8a7cff 0%, #6f5ef6 100%);
+  box-shadow: 0 6px 16px rgba(111, 94, 246, 0.38);
+}
+.rail-account.rail-teams .rail-platform-chip { background: #6f5ef6; }
+
+.rail-add {
+  color: #aeb8dc;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.content-pane-dark {
+  min-width: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(92, 56, 184, 0.12), rgba(0, 0, 0, 0) 30%),
+    radial-gradient(circle at 80% 80%, rgba(30, 69, 160, 0.12), rgba(0, 0, 0, 0) 35%),
+    #080b12;
+  overflow: hidden;
+}
+
+.content-body {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+}
+
+.iframe-shell.dark {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #000;
+}
+
+.iframe-shell.dark.native-host {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.service-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.inline-hint {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(7, 11, 18, 0.5);
+  padding: 8px;
+}
+
+.dark-modal-content {
+  background: #131a27;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #dbe7ff;
+}
+
+.dark-modal-header {
+  background: #131a27;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark-modal-title {
+  color: #e8efff;
+  font-weight: 700;
+}
+
+.dark-modal-body label {
+  color: #b8c5e6;
+}
+
+.dark-modal-body input,
+.dark-modal-body select {
+  background: #0f1420;
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #e7eeff;
+}
+
+.settings-stack {
+  padding-top: 2px;
+}
+
+.settings-row {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.settings-hint {
+  line-height: 1.4;
+  opacity: 0.95;
+}
+
+.status-box {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: rgba(7, 11, 18, 0.6);
+  padding: 8px;
+}
+
+@media (max-width: 980px) {
+  .ram-layout {
+    grid-template-columns: 54px minmax(0, 1fr);
+  }
+
+  .accounts-rail {
+    min-width: 54px;
+    width: 54px;
+    padding: 8px 4px;
+  }
+
+  .rail-account {
+    width: 26px;
+    height: 26px;
+  }
+}

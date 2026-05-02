@@ -1,0 +1,89 @@
+{
+  "name": "@omnichat/desktop",
+  "productName": "OmniChat",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "main": "electron-main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "electron:dev": "concurrently -k -n vite,electron \"sh -c 'lsof -ti:5180 | xargs kill -9 2>/dev/null || true; vite'\" \"wait-on http://localhost:5180 && electron electron-main.cjs\"",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc -b --pretty false",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "pack:mac": "electron-builder --mac dmg --publish never",
+    "pack:win": "electron-builder --win nsis --x64 --publish never",
+    "publish:mac": "electron-builder --mac dmg --publish always",
+    "publish:win": "electron-builder --win nsis --x64 --publish always"
+  },
+  "dependencies": {
+    "@mantine/core": "^9.1.1",
+    "@mantine/hooks": "^9.1.1",
+    "@mantine/notifications": "^9.1.1",
+    "@tabler/icons-react": "^3.41.1",
+    "@tanstack/react-query": "^5.100.6",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "electron-updater": "^6.3.9",
+    "zustand": "^5.0.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.12.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "electron": "^37.4.0",
+    "electron-builder": "^25.1.8",
+    "eslint": "^10.2.1",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.5.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.58.2",
+    "vite": "^8.0.10",
+    "wait-on": "^8.0.5"
+  },
+  "build": {
+    "appId": "com.omnichat.desktop",
+    "productName": "OmniChat",
+    "asar": true,
+    "directories": {
+      "buildResources": "public",
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "electron-main.cjs",
+      "electron-preload.cjs",
+      "webview-preload.cjs",
+      "public/**",
+      "package.json"
+    ],
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "artifactName": "OmniChat-${version}-mac.${ext}",
+      "icon": "public/app-icon.png"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "OmniChat-${version}-win-x64.${ext}",
+      "icon": "public/app-icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "${env.GH_OWNER}",
+      "repo": "${env.GH_REPO}",
+      "releaseType": "release"
+    }
+  }
+}
