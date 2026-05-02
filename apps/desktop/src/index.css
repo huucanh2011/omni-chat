@@ -289,7 +289,7 @@ body {
   background: rgba(255, 255, 255, 0.06);
 }
 
-.content-pane-dark {
+.content-pane-chat {
   min-width: 0;
   height: 100dvh;
   display: flex;
@@ -377,28 +377,28 @@ body {
   background: rgba(111, 142, 216, 0.26);
 }
 
-.dark-modal-content {
+.chat-modal-content {
   background: #131a27;
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: #dbe7ff;
 }
 
-.dark-modal-header {
+.chat-modal-header {
   background: #131a27;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.dark-modal-title {
+.chat-modal-title {
   color: #e8efff;
   font-weight: 700;
 }
 
-.dark-modal-body label {
+.chat-modal-body label {
   color: #b8c5e6;
 }
 
-.dark-modal-body input,
-.dark-modal-body select {
+.chat-modal-body input,
+.chat-modal-body select {
   background: #0f1420;
   border-color: rgba(255, 255, 255, 0.16);
   color: #e7eeff;
