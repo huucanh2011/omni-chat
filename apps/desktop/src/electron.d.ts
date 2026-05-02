@@ -14,6 +14,7 @@ type WebviewPayload = {
 
 interface ElectronApi {
   onUnread(callback: (payload: { total: number; perAccount: Record<string, number> }) => void): () => void;
+  onUpdateState(callback: (payload: { enabled: boolean; checking: boolean; available: boolean; downloaded: boolean; version: string; error: string }) => void): () => void;
   switchAccountWebview(payload: WebviewPayload): Promise<void>;
   mountAccountWebview(payload: WebviewPayload): Promise<void>;
   resizeAccountWebview(payload: WebviewPayload): Promise<void>;

@@ -43,6 +43,17 @@ export const vi = {
     launchOnStartup: "Mở cùng hệ thống",
     globalHint:
       "Thiết lập này áp dụng cho toàn bộ ứng dụng, không theo từng tài khoản.",
+    updateReady: "Đã tải xong bản cập nhật",
+    updateVersion: (v: string) => `Phiên bản mới: ${v}`,
+    installNow: "Cài đặt ngay",
+    installing: "Đang cài đặt...",
+    installFailed: "Không thể khởi chạy cài đặt tự động",
+    checkUpdate: "Kiểm tra cập nhật",
+    checkingUpdate: "Đang kiểm tra...",
+    upToDate: "Ứng dụng đang ở phiên bản mới nhất",
+    updateAvailable: "Có bản cập nhật mới, đang tải nền...",
+    updateError: "Kiểm tra cập nhật thất bại",
+    updateOnlyPackaged: "Chỉ khả dụng ở bản đã cài đặt (không áp dụng cho dev)"
   },
   drawer: {
     addAccountTitle: "Thêm tài khoản",

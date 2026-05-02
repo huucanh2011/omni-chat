@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { AppShell, Box, Modal, Stack, Switch, Text } from "@mantine/core";
+import { AppShell, Box, Button, Modal, Stack, Switch, Text } from "@mantine/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createAccount, deleteAccount, fetchAccounts, updateAccount } from "./api";
 import {
@@ -26,6 +26,7 @@ import { vi } from "./i18n/vi";
 
 type DrawerMode = "add" | "edit";
 type AccountPrefs = Record<string, { muted?: boolean; proxyUrl?: string; userAgent?: string }>;
+type UpdateState = { enabled: boolean; checking: boolean; available: boolean; downloaded: boolean; version: string; error: string };
 
 function loadPrefs(): AccountPrefs {
   try {
@@ -63,6 +64,9 @@ function App() {
   const [accountSearch, setAccountSearch] = useState("");
   const [accountOrder, setAccountOrder] = useState<string[]>(loadAccountOrder);
   const [appVersion, setAppVersion] = useState(import.meta.env.VITE_APP_VERSION ?? "dev");
+  const [updateState, setUpdateState] = useState<UpdateState>({ enabled: false, checking: false, available: false, downloaded: false, version: "", error: "" });
+  const [installingUpdate, setInstallingUpdate] = useState(false);
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
 
   const webviewHostRef = useRef<HTMLDivElement | null>(null);
   const syncTokenRef = useRef(0);
@@ -190,6 +194,22 @@ function App() {
     void window.electronAPI?.getVersion().then((v) => {
       if (v) setAppVersion(v);
     });
+  }, []);
+
+  useEffect(() => {
+    if (!isElectronApp() || !window.electronAPI) return;
+
+    void window.electronAPI.getUpdateState().then((state) => {
+      if (state) setUpdateState(state);
+    });
+
+    const off = window.electronAPI.onUpdateState((state) => {
+      setUpdateState(state);
+    });
+
+    return () => {
+      off?.();
+    };
   }, []);
 
 
@@ -334,6 +354,32 @@ function App() {
     setStatusText(vi.status.recoverTriggered);
   };
 
+  const installUpdateNow = async () => {
+    if (!isElectronApp() || !window.electronAPI) return;
+    setInstallingUpdate(true);
+    const ok = await window.electronAPI.quitAndInstallUpdate();
+    if (!ok) {
+      setInstallingUpdate(false);
+      setStatusText(vi.settings.installFailed);
+    }
+  };
+
+  const checkUpdateNow = async () => {
+    if (!isElectronApp() || !window.electronAPI) return;
+    setCheckingUpdate(true);
+    try {
+      const next = await window.electronAPI.checkForUpdates();
+      if (next) setUpdateState(next);
+      if (next?.downloaded) setStatusText(vi.settings.updateReady);
+      else if (next?.available) setStatusText(vi.settings.updateAvailable);
+      else setStatusText(vi.settings.upToDate);
+    } catch {
+      setStatusText(vi.settings.updateError);
+    } finally {
+      setCheckingUpdate(false);
+    }
+  };
+
   const reorderAccounts = (fromId: string, toId: string) => {
     const current = filteredAccounts.map((a) => a.id);
     const fromIndex = current.indexOf(fromId);
@@ -442,6 +488,32 @@ function App() {
               />
             </div>
             <Text size="sm" c="#9fb0d8" className="settings-hint">{vi.settings.globalHint}</Text>
+            <div className="settings-row">
+              <Stack gap={8}>
+                <Button
+                  size="xs"
+                  variant="light"
+                  onClick={() => void checkUpdateNow()}
+                  loading={checkingUpdate || updateState.checking}
+                  disabled={!updateState.enabled}
+                >
+                  {checkingUpdate || updateState.checking ? vi.settings.checkingUpdate : vi.settings.checkUpdate}
+                </Button>
+                {!updateState.enabled ? (
+                  <Text size="xs" c="#9fb0d8">{vi.settings.updateOnlyPackaged}</Text>
+                ) : null}
+                {updateState.downloaded ? (
+                  <>
+                    <Text size="sm" fw={700} c="#dce7ff">{vi.settings.updateReady}</Text>
+                    <Text size="xs" c="#9fb0d8">{vi.settings.updateVersion(updateState.version || "")}</Text>
+                    <Button size="xs" color="teal" onClick={() => void installUpdateNow()} loading={installingUpdate}>
+                      {installingUpdate ? vi.settings.installing : vi.settings.installNow}
+                    </Button>
+                  </>
+                ) : null}
+                {updateState.error ? <Text size="xs" c="#ff9ca8">{updateState.error}</Text> : null}
+              </Stack>
+            </div>
           </Stack>
         </Modal>
       </AppShell.Main>

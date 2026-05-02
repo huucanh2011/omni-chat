@@ -6,6 +6,11 @@ contextBridge.exposeInMainWorld("electronAPI", {
     ipcRenderer.on("accounts:unread", h);
     return () => ipcRenderer.removeListener("accounts:unread", h);
   },
+  onUpdateState: (callback) => {
+    const h = (_e, payload) => callback(payload);
+    ipcRenderer.on("app:update-state", h);
+    return () => ipcRenderer.removeListener("app:update-state", h);
+  },
   switchAccountWebview: (payload) => ipcRenderer.invoke("webview:switch", payload),
   mountAccountWebview: (payload) => ipcRenderer.invoke("webview:mount", payload),
   resizeAccountWebview: (payload) => ipcRenderer.invoke("webview:resize", payload),
