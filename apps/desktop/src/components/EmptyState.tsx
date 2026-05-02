@@ -6,7 +6,7 @@ type EmptyStateProps = {
   onAddAccount: (platform?: Platform) => void;
 };
 
-const platformIconSrc = (platform: Platform): string => `/platforms/${platform}.png`;
+const platformIconSrc = (platform: Platform): string => `${import.meta.env.BASE_URL}platforms/${platform}.png`;
 
 function PlatformIcon({ platform, alt }: { platform: Platform; alt: string }) {
   return (

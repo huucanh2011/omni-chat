@@ -2,7 +2,7 @@
   "name": "@omnichat/desktop",
   "productName": "OmniChat",
   "private": true,
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "main": "electron-main.cjs",
   "scripts": {
@@ -12,9 +12,9 @@
     "typecheck": "tsc -b --pretty false",
     "lint": "eslint .",
     "preview": "vite preview",
-    "pack:mac": "electron-builder --mac dmg --publish never",
+    "pack:mac": "electron-builder --mac --publish never",
     "pack:win": "electron-builder --win nsis --x64 --publish never",
-    "publish:mac": "pnpm build && electron-builder --mac dmg --publish always",
+    "publish:mac": "pnpm build && electron-builder --mac --publish always",
     "publish:win": "pnpm build && electron-builder --win nsis --x64 --publish always"
   },
   "dependencies": {
@@ -64,7 +64,8 @@
     ],
     "mac": {
       "target": [
-        "dmg"
+        "dmg",
+        "zip"
       ],
       "artifactName": "OmniChat-${version}-mac.${ext}",
       "icon": "public/app-icon.png"

@@ -64,7 +64,7 @@ export function AccountRail({
     return vi.platform.teams;
   };
 
-  const platformIconSrc = (platform: Account["platform"]): string => `/platforms/${platform}.png`;
+  const platformIconSrc = (platform: Account["platform"]): string => `${import.meta.env.BASE_URL}platforms/${platform}.png`;
 
   return (
     <aside className="accounts-rail">
