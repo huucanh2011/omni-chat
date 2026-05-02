@@ -14,8 +14,8 @@
     "preview": "vite preview",
     "pack:mac": "electron-builder --mac dmg --publish never",
     "pack:win": "electron-builder --win nsis --x64 --publish never",
-    "publish:mac": "electron-builder --mac dmg --publish always",
-    "publish:win": "electron-builder --win nsis --x64 --publish always"
+    "publish:mac": "pnpm build && electron-builder --mac dmg --publish always",
+    "publish:win": "pnpm build && electron-builder --win nsis --x64 --publish always"
   },
   "dependencies": {
     "@mantine/core": "^9.1.1",
@@ -82,8 +82,8 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "${env.GH_OWNER}",
-      "repo": "${env.GH_REPO}",
+      "owner": "huucanh2011",
+      "repo": "omni-chat",
       "releaseType": "release"
     }
   }

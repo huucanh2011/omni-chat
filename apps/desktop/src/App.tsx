@@ -15,6 +15,7 @@ import type { Account, Platform } from "./types";
 import { defaultServiceUrl, isValidHttpUrl, normalizeServiceUrl } from "./constants";
 import { AccountRail } from "./components/AccountRail";
 import { AccountDrawer } from "./components/AccountDrawer";
+import { EmptyState } from "./components/EmptyState";
 import { useAccountMountSync } from "./hooks/useAccountMountSync";
 import { useElectronBootstrap } from "./hooks/useElectronBootstrap";
 import { useHealthMonitor } from "./hooks/useHealthMonitor";
@@ -259,6 +260,20 @@ function App() {
     if (selectedAccount && isElectronApp()) await setAccountWebviewVisibility(selectedAccount.id, true);
   };
 
+  const openAddWithPlatform = async (nextPlatform?: Platform) => {
+    const targetPlatform = nextPlatform ?? "telegram";
+    setDrawerMode("add");
+    setPlatform(targetPlatform);
+    setDisplayName("");
+    setServiceUrl(defaultServiceUrl[targetPlatform]);
+    setMuted(false);
+    setProxyUrl("");
+    setUserAgent("");
+
+    if (selectedAccount && isElectronApp()) await setAccountWebviewVisibility(selectedAccount.id, false);
+    setDrawerOpen(true);
+  };
+
   useEffect(() => {
     if (!selectedAccount || !isElectronApp()) return;
     void setAccountWebviewVisibility(selectedAccount.id, !settingsOpen);
@@ -350,7 +365,7 @@ function App() {
             appVersion={appVersion}
             onSelect={setSelectedAccountId}
             onReorder={reorderAccounts}
-            onAdd={() => void openDrawer("add")}
+            onAdd={() => void openAddWithPlatform()}
             onEdit={() => void openDrawer("edit")}
             canEdit={Boolean(selectedAccount)}
           />
@@ -367,7 +382,7 @@ function App() {
                 )}
               </Box>
             ) : (
-              <Box className="inline-hint"><Text size="sm">{vi.app.pickOrAddAccount}</Text></Box>
+              <EmptyState onAddAccount={(nextPlatform) => void openAddWithPlatform(nextPlatform)} />
             )}
           </section>
         </Box>

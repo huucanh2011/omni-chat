@@ -2,7 +2,7 @@ export const vi = {
   platform: {
     telegram: "Telegram",
     zalo: "Zalo",
-    teams: "Teams"
+    teams: "Teams",
   },
   app: {
     ready: "Sẵn sàng",
@@ -10,7 +10,7 @@ export const vi = {
     serviceView: "Khung dịch vụ",
     invalidServiceUrl: "URL dịch vụ không hợp lệ.",
     pickOrAddAccount: "Chọn tài khoản hoặc thêm tài khoản mới.",
-    requiredDisplayNameAndUrl: "Cần nhập tên hiển thị và URL dịch vụ"
+    requiredDisplayNameAndUrl: "Cần nhập tên hiển thị và URL dịch vụ",
   },
   status: {
     switchFailed: (name: string) => `Chuyển thất bại: ${name}`,
@@ -22,19 +22,27 @@ export const vi = {
     deleteFailed: "Xoá tài khoản thất bại",
     reloaded: (name: string) => `Đã tải lại: ${name}`,
     sessionCleared: "Đã xoá session",
-    recoverTriggered: "Đã chạy khôi phục"
+    recoverTriggered: "Đã chạy khôi phục",
   },
   header: {
     launchOnStartup: "Mở cùng hệ thống",
     connected: "Đã kết nối",
     offline: "Ngoại tuyến",
     reloadTitle: "Tải lại webview",
-    recoverTitle: "Khôi phục kết nối"
+    recoverTitle: "Khôi phục kết nối",
+  },
+  emptyState: {
+    title: "Chưa có tài khoản",
+    description: "Thêm tài khoản chat đầu tiên để bắt đầu sử dụng OmniChat.",
+    addTelegram: "Telegram",
+    addZalo: "Zalo",
+    addTeams: "Teams",
   },
   settings: {
     title: "Cài đặt ứng dụng",
     launchOnStartup: "Mở cùng hệ thống",
-    globalHint: "Thiết lập này áp dụng cho toàn bộ ứng dụng, không theo từng tài khoản."
+    globalHint:
+      "Thiết lập này áp dụng cho toàn bộ ứng dụng, không theo từng tài khoản.",
   },
   drawer: {
     addAccountTitle: "Thêm tài khoản",
@@ -50,12 +58,12 @@ export const vi = {
     saveChanges: "Lưu thay đổi",
     deleteAccount: "Xoá tài khoản",
     clearAccountSession: "Xoá session tài khoản",
-    status: "Trạng thái"
+    status: "Trạng thái",
   },
   rail: {
     addAccount: "Thêm tài khoản",
     editAccount: "Sửa tài khoản",
     accountTitle: (name: string, platform: string) => `${name} (${platform})`,
-    searchPlaceholder: "Tìm tài khoản..."
-  }
+    searchPlaceholder: "Tìm tài khoản...",
+  },
 } as const;

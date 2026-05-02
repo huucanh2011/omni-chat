@@ -74,6 +74,21 @@ body {
   color: #c8d8ff;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.14);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.rail-active-label-text {
+  line-height: 1;
+}
+
+.rail-active-label-icon {
+  width: 10px;
+  height: 10px;
+  object-fit: contain;
+  border-radius: 2px;
 }
 
 .rail-active-telegram {
@@ -101,18 +116,18 @@ body {
 }
 
 .rail-search-inline {
-  width: 44px;
+  width: 46px;
 }
 
 .rail-search-inline input {
   height: 24px;
   min-height: 24px;
-  padding: 0 6px;
+  padding: 0 4px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   background: rgba(255, 255, 255, 0.06);
   color: #dbe6ff;
-  font-size: 10px;
+  font-size: 9.5px;
   text-align: center;
 }
 
@@ -153,18 +168,15 @@ body {
 }
 
 .rail-account {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
   display: inline-flex;
   position: relative;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.12);
-  color: #eef3ff;
-  font-weight: 700;
-  font-size: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(180deg, rgba(44, 55, 78, 0.92) 0%, rgba(29, 38, 56, 0.95) 100%);
+  border: 1px solid rgba(150, 173, 228, 0.32);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
   cursor: grab;
@@ -172,6 +184,15 @@ body {
 
 .rail-account:hover {
   transform: translateY(-1px);
+}
+
+.rail-account-label {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: #f3f7ff;
+  text-transform: uppercase;
+  pointer-events: none;
 }
 
 .rail-account:active {
@@ -191,17 +212,25 @@ body {
 
 .rail-account .rail-platform-chip {
   position: absolute;
-  left: -5px;
+  right: -5px;
   bottom: -5px;
-  min-width: 13px;
-  height: 11px;
+  width: 14px;
+  height: 14px;
   border-radius: 999px;
-  font-size: 6px;
-  line-height: 11px;
-  text-align: center;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.28);
-  background: rgba(0, 0, 0, 0.45);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: #182236;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  z-index: 3;
+}
+
+.rail-platform-chip-icon {
+  width: 9px;
+  height: 9px;
+  object-fit: contain;
 }
 
 .rail-account.active {
@@ -218,12 +247,12 @@ body {
   content: "";
   position: absolute;
   left: -7px;
-  top: 7px;
+  top: 8px;
   width: 3px;
-  height: 16px;
+  height: 14px;
   border-radius: 999px;
   background: #8fc2ff;
-  box-shadow: 0 0 10px rgba(143, 194, 255, 0.9);
+  box-shadow: 0 0 8px rgba(143, 194, 255, 0.85);
 }
 
 .rail-account.active::after {
@@ -251,26 +280,9 @@ body {
   }
 }
 
-.rail-account.rail-telegram {
-  border-color: rgba(88, 174, 255, 0.9);
-  background: linear-gradient(180deg, #53b2ff 0%, #2f89f5 100%);
-  box-shadow: 0 6px 16px rgba(47, 137, 245, 0.35);
-}
-.rail-account.rail-telegram .rail-platform-chip { background: #2e86de; }
-
-.rail-account.rail-zalo {
-  border-color: rgba(41, 137, 255, 0.92);
-  background: linear-gradient(180deg, #3c9bff 0%, #1c6df0 100%);
-  box-shadow: 0 6px 16px rgba(28, 109, 240, 0.35);
-}
-.rail-account.rail-zalo .rail-platform-chip { background: #1976d2; }
-
-.rail-account.rail-teams {
-  border-color: rgba(124, 116, 255, 0.92);
-  background: linear-gradient(180deg, #8a7cff 0%, #6f5ef6 100%);
-  box-shadow: 0 6px 16px rgba(111, 94, 246, 0.38);
-}
-.rail-account.rail-teams .rail-platform-chip { background: #6f5ef6; }
+.rail-account.rail-telegram .rail-platform-chip { background: #256fb9; }
+.rail-account.rail-zalo .rail-platform-chip { background: #1a5fad; }
+.rail-account.rail-teams .rail-platform-chip { background: #5345c9; }
 
 .rail-add {
   color: #aeb8dc;
@@ -325,6 +337,44 @@ body {
   border-radius: 8px;
   background: rgba(7, 11, 18, 0.5);
   padding: 8px;
+}
+
+.empty-state-wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+
+.empty-state-card {
+  width: min(560px, 100%);
+  border-radius: 16px;
+  padding: 22px 18px;
+  border: 1px solid rgba(151, 178, 235, 0.18);
+  background: linear-gradient(180deg, rgba(18, 26, 42, 0.96) 0%, rgba(9, 15, 26, 0.9) 100%);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.38);
+}
+
+.empty-state-title {
+  letter-spacing: 0.1px;
+  margin: 0;
+}
+
+.empty-state-desc {
+  max-width: 420px;
+  line-height: 1.45;
+}
+
+.empty-state-actions .mantine-Button-root {
+  background: rgba(111, 142, 216, 0.16);
+  border: 1px solid rgba(139, 166, 233, 0.3);
+  color: #dbe8ff;
+}
+
+.empty-state-actions .mantine-Button-root:hover {
+  background: rgba(111, 142, 216, 0.26);
 }
 
 .dark-modal-content {
@@ -392,4 +442,23 @@ body {
     width: 26px;
     height: 26px;
   }
+}
+
+.empty-state-platform-icon-wrap {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+.empty-state-platform-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
 }

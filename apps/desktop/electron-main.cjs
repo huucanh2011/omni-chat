@@ -354,6 +354,13 @@ function normalizeServiceUrl(serviceUrl) {
 async function computeUnread(entry) {
   const wc = entry.view?.webContents;
   if (!wc || wc.isDestroyed()) return 0;
+
+  // Avoid executeJavaScript while a page is loading; Electron internally queues
+  // did-stop-loading listeners for these calls and can trigger MaxListeners warnings.
+  if (wc.isLoading() || wc.isWaitingForResponse()) {
+    return entry.unread || 0;
+  }
+
   return detectUnreadForWebContents(wc);
 }
 

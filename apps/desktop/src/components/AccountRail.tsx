@@ -16,7 +16,7 @@ import {
   IconSettings,
 } from "@tabler/icons-react";
 import type { Account } from "../types";
-import { platformChip, shortName } from "../constants";
+import { shortName } from "../constants";
 import { vi } from "../i18n/vi";
 
 type Props = {
@@ -64,6 +64,8 @@ export function AccountRail({
     return vi.platform.teams;
   };
 
+  const platformIconSrc = (platform: Account["platform"]): string => `/platforms/${platform}.png`;
+
   return (
     <aside className="accounts-rail">
       <Stack justify="space-between" h="100%">
@@ -92,7 +94,7 @@ export function AccountRail({
             size="xs"
             value={searchValue}
             onChange={(e) => onSearchChange(e.currentTarget.value)}
-            placeholder="Tìm..."
+            placeholder="Tìm"
             className="rail-search-inline"
           />
           <Stack gap={8} align="center">
@@ -121,12 +123,16 @@ export function AccountRail({
                   onReorder(fromId, account.id);
                 }}
               >
-                <span>
-                  {shortName(account.displayName) ||
-                    account.platform.slice(0, 1).toUpperCase()}
+                <span className="rail-account-label">
+                  {shortName(account.displayName) || account.platform.slice(0, 1).toUpperCase()}
                 </span>
-                <small className="rail-platform-chip">
-                  {platformChip(account.platform)}
+                <small className="rail-platform-chip" aria-hidden="true">
+                  <img
+                    src={platformIconSrc(account.platform)}
+                    alt=""
+                    className="rail-platform-chip-icon"
+                    loading="lazy"
+                  />
                 </small>
                 {unreadByAccount[account.id] ? (
                   <i className="acc-unread-dot" />
@@ -145,18 +151,19 @@ export function AccountRail({
           >
             <IconPlus size={18} />
           </ActionIcon>
-          <ActionIcon
-            size={30}
-            radius="md"
-            variant="subtle"
-            color="gray"
-            className="rail-add"
-            onClick={onEdit}
-            disabled={!canEdit}
-            title={vi.rail.editAccount}
-          >
-            <IconEdit size={17} />
-          </ActionIcon>
+          {canEdit ? (
+            <ActionIcon
+              size={30}
+              radius="md"
+              variant="subtle"
+              color="gray"
+              className="rail-add"
+              onClick={onEdit}
+              title={vi.rail.editAccount}
+            >
+              <IconEdit size={17} />
+            </ActionIcon>
+          ) : null}
         </Stack>
         <Stack gap={8} align="center">
           <Divider w="70%" color="rgba(255,255,255,0.10)" />
@@ -193,16 +200,24 @@ export function AccountRail({
           >
             <IconSettings size={15} />
           </ActionIcon>
-          <Text
-            className={`rail-active-label ${selectedAccountPlatform ? `rail-active-${selectedAccountPlatform}` : ""}`}
-            size="10px"
-            ta="center"
-            mt={-2}
-            lineClamp={1}
-            title={selectedAccountName}
-          >
-            {`${shortName(selectedAccountName) || "?"} · ${selectedAccountPlatform ? platformChip(selectedAccountPlatform) : "--"}`}
-          </Text>
+          {selectedAccountPlatform ? (
+            <Text
+              className={`rail-active-label rail-active-${selectedAccountPlatform}`}
+              size="10px"
+              ta="center"
+              mt={-2}
+              lineClamp={1}
+              title={selectedAccountName}
+            >
+              <span className="rail-active-label-text">{shortName(selectedAccountName) || "?"}</span>
+              <img
+                src={platformIconSrc(selectedAccountPlatform)}
+                alt={platformLabel(selectedAccountPlatform)}
+                className="rail-active-label-icon"
+                loading="lazy"
+              />
+            </Text>
+          ) : null}
           <Text className="rail-version" size="9px" ta="center" title={`Version ${appVersion}`}>
             {`v${appVersion}`}
           </Text>
