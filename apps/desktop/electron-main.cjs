@@ -10,6 +10,7 @@ try {
 } catch {}
 
 const APP_NAME = "OmniChat";
+const RELEASES_URL = "https://github.com/huucanh2011/omni-chat/releases";
 const GATEWAY_PORT = Number(process.env.GATEWAY_PORT || 8787);
 const VITE_URL = process.env.VITE_DEV_SERVER_URL || "http://localhost:5180";
 const PRELOAD = path.join(__dirname, "electron-preload.cjs");
@@ -84,8 +85,8 @@ function setupAutoUpdater() {
   }
 
   updateState.enabled = true;
-  autoUpdater.autoDownload = true;
-  autoUpdater.autoInstallOnAppQuit = true;
+  autoUpdater.autoDownload = process.platform !== "darwin";
+  autoUpdater.autoInstallOnAppQuit = process.platform !== "darwin";
   autoUpdater.autoRunAppAfterInstall = true;
 
   autoUpdater.on("checking-for-update", () => {
@@ -705,11 +706,16 @@ app.whenReady().then(() => {
     return updateState;
   });
   ipcMain.handle("app:quitAndInstallUpdate", async () => {
+    if (process.platform === "darwin") return false;
     if (!updateState.downloaded || !autoUpdater) return false;
     autoUpdater.quitAndInstall();
     return true;
   });
   ipcMain.handle("app:getGatewayBaseUrl", async () => gatewayBaseUrl);
+  ipcMain.handle("app:openReleases", async () => {
+    await shell.openExternal(RELEASES_URL);
+    return true;
+  });
   ipcMain.handle("account:clearSession", async (_e, p) => clearSession(p));
   ipcMain.handle("account:getHealth", async () => getHealthSnapshot());
   ipcMain.handle("account:recover", async (_e, p) => recoverAccount(p));

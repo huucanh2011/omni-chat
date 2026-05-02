@@ -22,6 +22,8 @@ import { useAccountActions } from "./useAccountActions";
 import { useAccountWebviewHost } from "./useAccountWebviewHost";
 import { vi } from "../i18n/vi";
 
+const RELEASES_URL = "https://github.com/huucanh2011/omni-chat/releases";
+
 export function useAppController() {
   const { selectedAccountId, setSelectedAccountId } = useUiStore();
 
@@ -189,6 +191,14 @@ export function useAppController() {
     setLaunchOnStartup(Boolean(next));
   };
 
+  const openReleases = async () => {
+    if (isElectronApp()) {
+      await window.electronAPI?.openReleases();
+      return;
+    }
+    window.open(RELEASES_URL, "_blank", "noopener,noreferrer");
+  };
+
   return {
     settingsOpen,
     setSettingsOpen,
@@ -235,5 +245,6 @@ export function useAppController() {
     clearSession,
     recoverCurrent,
     toggleLaunch,
+    openReleases,
   };
 }

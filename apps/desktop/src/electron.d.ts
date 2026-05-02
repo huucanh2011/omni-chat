@@ -26,6 +26,7 @@ interface ElectronApi {
   getUpdateState(): Promise<{ enabled: boolean; checking: boolean; available: boolean; downloaded: boolean; version: string; error: string }>;
   checkForUpdates(): Promise<{ enabled: boolean; checking: boolean; available: boolean; downloaded: boolean; version: string; error: string }>;
   quitAndInstallUpdate(): Promise<boolean>;
+  openReleases(): Promise<boolean>;
   setLaunchOnStartup(enabled: boolean): Promise<boolean>;
   getLaunchOnStartup(): Promise<boolean>;
   clearAccountSession(payload: { accountId: string }): Promise<void>;

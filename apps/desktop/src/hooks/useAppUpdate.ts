@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { notifications } from "@mantine/notifications";
 import { isElectronApp } from "../runtimeBridge";
 import { vi } from "../i18n/vi";
+import { isMacPlatform } from "../constants";
 
 export type UpdateState = {
   enabled: boolean;
@@ -18,7 +19,7 @@ const EMPTY_UPDATE_STATE: UpdateState = {
   available: false,
   downloaded: false,
   version: "",
-  error: ""
+  error: "",
 };
 
 type UseAppUpdateArgs = {
@@ -26,7 +27,9 @@ type UseAppUpdateArgs = {
 };
 
 export function useAppUpdate({ setStatusText }: UseAppUpdateArgs) {
-  const [updateState, setUpdateState] = useState<UpdateState>(EMPTY_UPDATE_STATE);
+  const isMac = isMacPlatform();
+  const [updateState, setUpdateState] =
+    useState<UpdateState>(EMPTY_UPDATE_STATE);
   const [installingUpdate, setInstallingUpdate] = useState(false);
   const [checkingUpdate, setCheckingUpdate] = useState(false);
   const lastDownloadedVersionRef = useRef("");
@@ -57,12 +60,22 @@ export function useAppUpdate({ setStatusText }: UseAppUpdateArgs) {
       color: "teal",
       title: vi.toast.updateDownloadedTitle,
       message: vi.toast.updateDownloadedBody(v || "bản mới"),
-      autoClose: 7000
+      autoClose: 7000,
     });
   }, [updateState.downloaded, updateState.version]);
 
   const installUpdateNow = async () => {
     if (!isElectronApp() || !window.electronAPI) return;
+    if (isMac) {
+      setStatusText(vi.settings.macManualUpdateHint);
+      notifications.show({
+        color: "yellow",
+        title: vi.toast.updateManualTitle,
+        message: vi.toast.updateManualBody,
+        autoClose: 6000,
+      });
+      return;
+    }
     setInstallingUpdate(true);
 
     const ok = await window.electronAPI.quitAndInstallUpdate();
@@ -86,15 +99,15 @@ export function useAppUpdate({ setStatusText }: UseAppUpdateArgs) {
           color: "teal",
           title: vi.toast.updateDownloadedTitle,
           message: vi.toast.updateDownloadedBody(next.version || "bản mới"),
-          autoClose: 7000
+          autoClose: 7000,
         });
       } else if (next?.available) {
-        setStatusText(vi.settings.updateAvailable);
+        setStatusText(isMac ? vi.settings.macManualUpdateHint : vi.settings.updateAvailable);
         notifications.show({
-          color: "blue",
-          title: vi.toast.updateAvailableTitle,
-          message: vi.toast.updateAvailableBody,
-          autoClose: 6000
+          color: isMac ? "yellow" : "blue",
+          title: isMac ? vi.toast.updateManualTitle : vi.toast.updateAvailableTitle,
+          message: isMac ? vi.toast.updateManualBody : vi.toast.updateAvailableBody,
+          autoClose: 6000,
         });
       } else {
         setStatusText(vi.settings.upToDate);
@@ -102,7 +115,7 @@ export function useAppUpdate({ setStatusText }: UseAppUpdateArgs) {
           color: "green",
           title: vi.toast.updateUpToDateTitle,
           message: vi.toast.updateUpToDateBody,
-          autoClose: 3500
+          autoClose: 3500,
         });
       }
     } catch {
@@ -111,7 +124,7 @@ export function useAppUpdate({ setStatusText }: UseAppUpdateArgs) {
         color: "red",
         title: vi.toast.updateErrorTitle,
         message: vi.settings.updateError,
-        autoClose: 5000
+        autoClose: 5000,
       });
     } finally {
       setCheckingUpdate(false);
@@ -123,6 +136,6 @@ export function useAppUpdate({ setStatusText }: UseAppUpdateArgs) {
     checkingUpdate,
     installingUpdate,
     checkUpdateNow,
-    installUpdateNow
+    installUpdateNow,
   };
 }

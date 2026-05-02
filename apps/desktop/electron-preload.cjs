@@ -22,6 +22,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getUpdateState: () => ipcRenderer.invoke("app:getUpdateState"),
   checkForUpdates: () => ipcRenderer.invoke("app:checkForUpdates"),
   quitAndInstallUpdate: () => ipcRenderer.invoke("app:quitAndInstallUpdate"),
+  openReleases: () => ipcRenderer.invoke("app:openReleases"),
   setLaunchOnStartup: (enabled) => ipcRenderer.invoke("app:setLaunchOnStartup", enabled),
   getLaunchOnStartup: () => ipcRenderer.invoke("app:getLaunchOnStartup"),
   clearAccountSession: (payload) => ipcRenderer.invoke("account:clearSession", payload),

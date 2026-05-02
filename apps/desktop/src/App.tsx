@@ -54,6 +54,7 @@ function App() {
     clearSession,
     recoverCurrent,
     toggleLaunch,
+    openReleases,
   } = useAppController();
 
   return (
@@ -136,6 +137,7 @@ function App() {
           onToggleLaunch={(enabled) => void toggleLaunch(enabled)}
           onCheckUpdate={() => void checkUpdateNow()}
           onInstallUpdate={() => void installUpdateNow()}
+          onOpenReleases={() => void openReleases()}
         />
       </AppShell.Main>
     </AppShell>

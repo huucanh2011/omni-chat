@@ -12,6 +12,10 @@ export const defaultServiceUrl: Record<Platform, string> = {
   teams: "https://teams.microsoft.com/v2/"
 };
 
+export function isMacPlatform(): boolean {
+  return typeof navigator !== "undefined" && /Mac/i.test(navigator.userAgent);
+}
+
 export function isValidHttpUrl(value: string): boolean {
   try {
     const parsed = new URL(value);

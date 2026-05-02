@@ -49,11 +49,14 @@ export const vi = {
     installing: "Đang cài đặt...",
     installFailed: "Không thể khởi chạy cài đặt tự động",
     checkUpdate: "Kiểm tra cập nhật",
+    openReleases: "Mở GitHub Releases",
     checkingUpdate: "Đang kiểm tra...",
     upToDate: "Ứng dụng đang ở phiên bản mới nhất",
     updateAvailable: "Có bản cập nhật mới, đang tải nền...",
     updateError: "Kiểm tra cập nhật thất bại",
-    updateOnlyPackaged: "Chỉ khả dụng ở bản đã cài đặt (không áp dụng cho dev)"
+    updateOnlyPackaged: "Chỉ khả dụng ở bản đã cài đặt (không áp dụng cho dev)",
+    macManualUpdateHint:
+      "macOS: vui lòng tải và cài thủ công từ GitHub Releases (không cài tự động)."
   },
   drawer: {
     addAccountTitle: "Thêm tài khoản",
@@ -84,6 +87,9 @@ export const vi = {
     updateAvailableBody: "Bản mới đang được tải nền. Vào Cài đặt ứng dụng để cài đặt ngay khi tải xong.",
     updateDownloadedTitle: "Bản cập nhật đã sẵn sàng",
     updateDownloadedBody: (v: string) => `OmniChat ${v} đã tải xong. Vào Cài đặt ứng dụng và bấm "Cài đặt ngay".`,
-    updateErrorTitle: "Không kiểm tra được cập nhật"
+    updateErrorTitle: "Không kiểm tra được cập nhật",
+    updateManualTitle: "Có bản cập nhật mới",
+    updateManualBody:
+      "Trên macOS, vui lòng tải bản mới từ GitHub Releases để cài đặt thủ công."
   },
 } as const;
