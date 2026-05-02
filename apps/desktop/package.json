@@ -58,6 +58,7 @@
       "electron-main.cjs",
       "electron-preload.cjs",
       "webview-preload.cjs",
+      "unread-detectors.cjs",
       "public/**",
       "package.json"
     ],
