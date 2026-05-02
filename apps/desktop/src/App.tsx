@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AppShell, Box, Button, Modal, Stack, Switch, Text } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createAccount, deleteAccount, fetchAccounts, updateAccount } from "./api";
 import {
@@ -72,6 +73,7 @@ function App() {
   const syncTokenRef = useRef(0);
   const lastMountedKeyRef = useRef<string>("");
   const prefsRef = useRef<AccountPrefs>(loadPrefs());
+  const lastDownloadedVersionRef = useRef("");
 
   const accountsQuery = useQuery({ queryKey: ["accounts"], queryFn: fetchAccounts });
 
@@ -211,6 +213,19 @@ function App() {
       off?.();
     };
   }, []);
+
+  useEffect(() => {
+    if (!updateState.downloaded) return;
+    const v = updateState.version || "";
+    if (lastDownloadedVersionRef.current === v) return;
+    lastDownloadedVersionRef.current = v;
+    notifications.show({
+      color: "teal",
+      title: vi.toast.updateDownloadedTitle,
+      message: vi.toast.updateDownloadedBody(v || "bản mới"),
+      autoClose: 7000
+    });
+  }, [updateState.downloaded, updateState.version]);
 
 
   const createAccountMutation = useMutation({
@@ -370,11 +385,39 @@ function App() {
     try {
       const next = await window.electronAPI.checkForUpdates();
       if (next) setUpdateState(next);
-      if (next?.downloaded) setStatusText(vi.settings.updateReady);
-      else if (next?.available) setStatusText(vi.settings.updateAvailable);
-      else setStatusText(vi.settings.upToDate);
+      if (next?.downloaded) {
+        setStatusText(vi.settings.updateReady);
+        notifications.show({
+          color: "teal",
+          title: vi.toast.updateDownloadedTitle,
+          message: vi.toast.updateDownloadedBody(next.version || "bản mới"),
+          autoClose: 7000
+        });
+      } else if (next?.available) {
+        setStatusText(vi.settings.updateAvailable);
+        notifications.show({
+          color: "blue",
+          title: vi.toast.updateAvailableTitle,
+          message: vi.toast.updateAvailableBody,
+          autoClose: 6000
+        });
+      } else {
+        setStatusText(vi.settings.upToDate);
+        notifications.show({
+          color: "green",
+          title: vi.toast.updateUpToDateTitle,
+          message: vi.toast.updateUpToDateBody,
+          autoClose: 3500
+        });
+      }
     } catch {
       setStatusText(vi.settings.updateError);
+      notifications.show({
+        color: "red",
+        title: vi.toast.updateErrorTitle,
+        message: vi.settings.updateError,
+        autoClose: 5000
+      });
     } finally {
       setCheckingUpdate(false);
     }

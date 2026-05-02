@@ -77,4 +77,13 @@ export const vi = {
     accountTitle: (name: string, platform: string) => `${name} (${platform})`,
     searchPlaceholder: "Tìm tài khoản...",
   },
+  toast: {
+    updateUpToDateTitle: "Đã là phiên bản mới nhất",
+    updateUpToDateBody: "Bạn đang dùng bản OmniChat mới nhất.",
+    updateAvailableTitle: "Đang tải bản cập nhật",
+    updateAvailableBody: "Bản mới đang được tải nền. Vào Cài đặt ứng dụng để cài đặt ngay khi tải xong.",
+    updateDownloadedTitle: "Bản cập nhật đã sẵn sàng",
+    updateDownloadedBody: (v: string) => `OmniChat ${v} đã tải xong. Vào Cài đặt ứng dụng và bấm "Cài đặt ngay".`,
+    updateErrorTitle: "Không kiểm tra được cập nhật"
+  },
 } as const;
