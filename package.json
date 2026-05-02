@@ -1,7 +1,7 @@
 {
   "name": "multi-chat-desktop",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "dev": "concurrently -n desktop,gateway -c cyan,green \"pnpm -C apps/desktop dev\" \"pnpm -C services/gateway dev\"",
     "dev:electron": "concurrently -n gateway,electron -c green,cyan \"pnpm -C services/gateway dev\" \"pnpm -C apps/desktop electron:dev\"",
